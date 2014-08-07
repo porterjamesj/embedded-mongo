@@ -78,6 +78,10 @@ module EmbeddedMongo::Backend
       @data.reject! { |doc| selector_match?(selector, doc) }
     end
 
+    def dump
+      data.clone
+    end
+
     private
 
     def data

@@ -47,6 +47,19 @@ module EmbeddedMongo::Backend
       @dbs.keys
     end
 
+    # loophole for serialization
+    def serialize
+      @dbs.inject({}) do |dbhash, pair|
+        name, db = pair
+        dbhash[name] = db.collections.inject({}) do |colhash, pair|
+          name, col = pair
+          colhash[name] = col.dump
+          colhash
+        end
+        dbhash
+      end
+    end
+
     private
 
     def get_db(db_name)

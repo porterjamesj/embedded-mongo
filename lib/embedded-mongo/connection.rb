@@ -1,5 +1,11 @@
 module EmbeddedMongo
   class Connection < Mongo::Connection
+
+    # serialize to a nested hash of {db => {collection => objects}}
+    def serialize
+      @backend.serialize
+    end
+
     # mock methods
     def request(method, *args)
       @backend.send(method, *args)
