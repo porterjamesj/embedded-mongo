@@ -184,6 +184,8 @@ module EmbeddedMongo::Backend
         else
           partial_selector == value
         end
+      when Regexp
+        partial_selector.match(value)
       when Hash
         if no_directive?(partial_selector)
           partial_selector == value
