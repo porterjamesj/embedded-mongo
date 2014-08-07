@@ -18,6 +18,28 @@ module EmbeddedMongo::Backend
            'dropped' => @name,
            'ok' => 1.0
          }]
+      elsif cmd['listDatabases']
+        if name != 'admin'
+          [{
+            "ok" => 0,
+            "errmsg" => "listDatabases may only be run against the admin database.",
+            "code" => 13
+          }]
+        else
+          databases = @manager.list_dbs.map do |db|
+            {
+              "name" => db,
+              # these are total lies but w/e
+              "sizeOnDisk" => nil,
+              "empty" => false
+            }
+          end
+          [{
+            'ok' => 1.0,
+            'totalSize' => nil,
+            'databases' => databases
+           }]
+        end
       elsif collection_name = cmd['drop']
         @collections.delete(collection_name)
         [{

@@ -43,6 +43,10 @@ module EmbeddedMongo::Backend
       @dbs.delete(db_name)
     end
 
+    def list_dbs
+      @dbs.keys
+    end
+
     private
 
     def get_db(db_name)
