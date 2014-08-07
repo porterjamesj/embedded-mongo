@@ -52,7 +52,7 @@ module EmbeddedMongo::Backend
       # TODO: return value?
       multi = opts.delete(:multi)
       upsert = opts.delete(:upsert)
-      safe = opts.delete(:safe) # TODO: do something with this
+      w = opts.delete(:w) # TODO: do something with this
       raise ArgumentError.new("Unrecognized opts: #{opts.inspect}") unless opts.empty?
 
       n = 0
@@ -155,9 +155,9 @@ module EmbeddedMongo::Backend
 
     def selector_match?(selector, doc)
       raise NotImplementedError.new('Does not current support $where queries') if selector.has_key?('$where')
-      selector.all? do |k, v|  
-        if(k == "$or") 
-          v.any? do |partial_selector| 
+      selector.all? do |k, v|
+        if(k == "$or")
+          v.any? do |partial_selector|
             selector_match?(partial_selector, doc)
           end
         elsif(k == "$and")
@@ -165,7 +165,7 @@ module EmbeddedMongo::Backend
             selector_match?(partial_selector, doc)
           end
         else
-          partial_match?(v, doc[k]) 
+          partial_match?(v, doc[k])
         end
       end
     end

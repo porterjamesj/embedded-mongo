@@ -39,7 +39,7 @@ module EmbeddedMongo
       if strict? && !collection_names.include?(name)
         raise Mongo::MongoDBError, "Collection #{name} doesn't exist. Currently in strict mode."
       else
-        opts[:safe] = opts.fetch(:safe, @safe)
+        opts[:w] = opts.fetch(:w, @safe)
         opts.merge!(:pk => @pk_factory) unless opts[:pk]
         Collection.new(name, self, opts)
       end

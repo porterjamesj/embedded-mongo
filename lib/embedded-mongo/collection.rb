@@ -8,12 +8,12 @@ module EmbeddedMongo
 
     def update(selector, document, opts={})
       EmbeddedMongo.log.debug("update: #{selector.inspect}, #{document.inspect}, #{opts.inspect}")
-      opts = { :safe => @safe }.merge(opts)
+      opts = { :w => @safe }.merge(opts)
       @connection.request(:update, @db.name, @name, selector, document, opts)
     end
 
     def remove(selector={}, opts={})
-      opts = { :safe => @safe }.merge(opts)
+      opts = { :w => @safe }.merge(opts)
       @connection.request(:remove, @db.name, @name, selector, opts)
     end
 

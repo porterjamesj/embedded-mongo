@@ -275,7 +275,7 @@ class DBAPITest < Test::Unit::TestCase
 
     @@db.create_collection('foobar')
 
-    opts = {:safe => true}
+    opts = {:w => true}
     coll = @@db.create_collection('foobar', opts)
     assert_equal true, coll.safe
   end

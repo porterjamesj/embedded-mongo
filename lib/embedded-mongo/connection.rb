@@ -27,7 +27,7 @@ module EmbeddedMongo
 
     # verbatim
     def [](db_name)
-      DB.new(db_name, self, :safe => @safe)
+      DB.new(db_name, self, :w => @safe)
     end
   end
 end
