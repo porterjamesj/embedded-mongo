@@ -2,11 +2,11 @@ module EmbeddedMongo::Backend
   class Collection
     class DuplicateKeyError < StandardError; end
 
-    def initialize(db, name)
+    def initialize(db, name, data = [])
       # TODO: system.namespaces
       @db = db
       @name = name
-      @data = []
+      @data = data
 
       if name == 'system.namespaces'
         # mark as system?

@@ -1,6 +1,14 @@
 module EmbeddedMongo
   class Connection < Mongo::Connection
 
+    def load_hash(hash)
+      hash.each do |dbname, collections|
+        collections.each do |colname, data|
+          @manager.insert_documents(dbname, colname, data)
+        end
+      end
+    end
+
     # serialize to a nested hash of {db => {collection => objects}}
     def serialize
       @backend.serialize
@@ -12,8 +20,9 @@ module EmbeddedMongo
     end
 
     def connect
-      EmbeddedMongo.log.debug "Connecting to #{@host_to_try.inspect}"
-      @backend = Backend.connect_backend(@host_to_try)
+      host_to_try = [@host, @port]
+      EmbeddedMongo.log.debug "Connecting to #{host_to_try.inspect}"
+      @backend = Backend.connect_backend(host_to_try)
     end
 
     def send_message(operation, message, log_message=nil)
