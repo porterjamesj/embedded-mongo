@@ -40,17 +40,17 @@ module EmbeddedMongo
         hint = @hint        # assumed to be normalized already
       end
 
-      raise RuntimeError, "Unknown options [#{opts.inspect}]" unless opts.empty?
+      EmbeddedMongo.log.debug("Unknown options [#{opts.inspect}]") unless opts.empty?
 
       cursor = Cursor.new(self, {
-        :selector    => selector, 
-        :fields      => fields, 
-        :skip        => skip, 
+        :selector    => selector,
+        :fields      => fields,
+        :skip        => skip,
         :limit       => limit,
-        :order       => sort, 
-        :hint        => hint, 
-        :snapshot    => snapshot, 
-        :timeout     => timeout, 
+        :order       => sort,
+        :hint        => hint,
+        :snapshot    => snapshot,
+        :timeout     => timeout,
         :batch_size  => batch_size,
         :transformer => transformer,
       })
