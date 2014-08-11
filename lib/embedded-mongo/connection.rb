@@ -4,7 +4,7 @@ module EmbeddedMongo
     def load_hash(hash)
       hash.each do |dbname, collections|
         collections.each do |colname, data|
-          @manager.insert_documents(dbname, colname, data)
+          @backend.insert_documents(dbname, colname, data)
         end
       end
     end
